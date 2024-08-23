@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadengine form</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container form-container">
+        <h2 class="text-center mb-2">Get a free offer from us</h2>
+        <h6 class="text-center mb-4">In collaboration with Obsidione</h6>
+        <form id="leadForm" class="needs-validation" novalidate>
+            <div class="form-group">
+                <input type="text" class="form-control" id="name" name="name" placeholder=" " required>
+                <label for="name">Name</label>
+                <div class="invalid-feedback">Please enter your name.</div>
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" id="email" name="email" placeholder=" " required>
+                <label for="email">Email</label>
+                <div class="invalid-feedback">Please enter a valid email address.</div>
+            </div>
+            <div class="form-group">
+                <input type="tel" class="form-control" id="phone" name="phone" placeholder=" " required>
+                <label for="phone">Phone</label>
+                <div class="invalid-feedback">Please enter your phone number.</div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="company" name="company" placeholder=" " required>
+                <label for="company">Company</label>
+                <div class="invalid-feedback">Please enter your company name.</div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="currentSupplier" name="currentSupplier" placeholder=" " required>
+                <label for="currentSupplier">Current Supplier</label>
+                <div class="invalid-feedback">Please enter your current supplier.</div>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" id="additionalInformation" name="additionalInformation" placeholder=" " rows="3" required style="resize: none;"></textarea>
+                <label for="additionalInformation">Additional Information</label>
+                <div class="invalid-feedback">Please provide additional information.</div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-test mb-3">
+                <span class="spinner-border spinner-border-sm" id="loadingSpinner" style="display: none;"></span>
+                <span id="submitButtonText">Submit</span>
+            </button>
+            <small class="mt-3">By filling this form, you consent to be contacted by three suppliers and to the collection, use, and storage of your personal information as our privacy policy.</small>
+        </form>
+        <p id="submissionStatus" class="text-center mt-3"></p>
+    </div>
+
+    <!-- All dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
