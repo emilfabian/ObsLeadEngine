@@ -65,8 +65,70 @@ const handleFormSubmission = (formName, formEmail, formPhone, formCompany, formC
 
 ```
 
+Your request will return a JS array with status code 200 for successful transmissions and 500 for failed transmissions. Failed transmissions will also contain a error message under the "message" section.
+
+```
+{status: 200, message: "Successful data transmission", uqTransIdent: "dc01fd0ae686d40b231063a529ab955a"}
+{status: 500, message: "Data transmission failed", reason: "Invalid dataset provided", uqTransIdent: "b989d6ce26becb56bd1ed41774c2b98c"}
+```
+
+## Validation of information
+To ensure that the ObsAPI will receive valid customer information, and to reduce the risk of receiving error messages during the data transmission, we require that you validate the customer information yourself before forwarding the request to the API. Data will be validated in the API as well, and as a result of this, your request might fail with status code 500.
+
+For validation of information from Norway, you can use the npm package norsk-validator which supports organisasjonsnummer, KID-nummer, bank account number and fødselsnummer. Remember to never share sensitive information through our services.
+
+You can find more information about the "norsk-validator" package through the installation page.
+
+```
+const validator = require('norsk-validator');
+
+const orgnr = validator.organisasjonsnummer('998447356');
+
+if(orgnr){
+return "Organization number exists";
+} else {
+return "Organization number is not existing";
+}
+
+```
+
+## Validation of postal codes
+
+Norway (via Obsidione API)
+```
+const axios = require('axios');
+
+async function checkZipcode(zipCodeNo) {
+  try {
+    const response = await axios.get('https://api.obsdn.io/v2/validate/zip/no/' + zipCodeNo);
+    const { valid, type, city, country } = response.data;
+
+    // Check if the zip code is valid and of the desired type
+    if (valid === "1") {
+      console.log(`Valid: ${valid}`);
+      console.log(`City: ${city}`);
+      console.log(`Country: ${country}`);
+    } else {
+      console.log(`Valid: 0`);
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+checkZipcode("0124");
+```
+
+Sweden (via npm swedish-portal-code-validator)
+```
+import { isValid } from 'swedish-postal-code-validator';
+ 
+isValid('41663') // => true
+isValid('32663') // => false
+```
+
 ## Contact us
-This is just an example and has to be modified into your existing systems. If you have any questions for the implementation or submission processes for external leads, please contact us through partners@obsidione.com or the partner team directly by phone +47 23 96 41 03 (Mon-Fri 10-20).
+This is just example codes and has to be modified into your existing systems. If you have any questions for the implementation or submission processes for external leads, please contact us through partners@obsidione.com or the partner team directly by phone +47 23 96 41 03 (Mon-Fri 10-20).
 Please press the selections for tech support (key 5) and then "API & connections" (key 3).
 
 &copy; 2024 Obsidione Norway AS<br />
