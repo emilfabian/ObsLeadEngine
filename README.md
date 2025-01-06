@@ -10,7 +10,9 @@ One of the primary functions of the API connector is to validate and transfer th
 Beyond just validating the data, the LeadEngine API Connector adds significant value by enhancing the submitted information. It does this by cross-referencing public databases and other resources to append additional relevant details. This could include enriching customer profiles with demographic data, geographic location, or even business information where applicable.
 
 ## How to Use
-To utilize our API Connector, your integration will require a unique API key provided by the partner team at Obsidione. This key is unique and essential for authenticating requests and ensuring secure communication between your webform and our backend systems. Please contact us to obtain your unique API key.
+To utilize our API Connector, your integration will require a unique API key provided by the partner team at Obsidione. This key is unique and essential for authenticating requests and ensuring secure communication between your webform and our backend systems. Please contact us to obtain your unique API key. LSI key numbers are strong encryption codes which is obtained from the partner team, which is applicable for certain industries.
+
+Please remember to validate the CurrentTimestamp to match the current Norwegian time (DDMMYY MMSSII UTC). If a timestamp is incorrect to server time, the request will fail with error 500.
 
 We recommend sending the information via Axios to ensure the best compatibility. Please see below for a super-simple example of how to use Axios with the POST method.
 
@@ -24,6 +26,9 @@ const sendLeadData = async (formData) => {
                 'Authorization': `Bearer YOUR_UNIQUE_API_KEY`,
                 'LeadEngineKey': `Bearer YOUR_UNIQUE_CUSTOMER_NO´,
                 'CurrentTimestamp': `CURRENT_TIMESTAMP`,
+                'LSI1': `Bearer LSI1_KEY_NO`,
+                'LSI2': `Bearer LSI2_KEY_NO`,
+                'LSI3': `Bearer LSI3_KEY_NO`,
                 'Content-Type': 'application/json'
             }
         });
