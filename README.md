@@ -144,5 +144,5 @@ isValid('32663') // => false
 ## Contact us
 This is just example codes and has to be modified into your existing systems. If you have any questions for the implementation or submission processes for external leads, please contact us through partners@obsidione.com.
 
-&copy; 2024 Obsidione Norway AS<br />
+&copy; 2025 Obsidione Norway AS<br />
 Leading the way there<br/><br />
