@@ -1,11 +1,15 @@
 const sendLeadData = async (formData) => {
     try {
+        // Remember to never pass headers information directly with JS, please use ENV variables
         const response = await fetch('https://api.obsleads.com/leadengine/submitNewLead?reference=externalLeadSubmission', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer YOUR_UNIQUE_API_KEY`,
                 'LeadEngineKey': `Bearer YOUR_UNIQUE_CUSTOMER_NO`,
                 'CurrentTimestamp': new Date().toISOString(),
+                'LSI1': `Bearer YOUR_UNIQUE_LSI1_KEY_NO`,
+                'LSI2': `Bearer YOUR_UNIQUE_LSI2_KEY_NO`,
+                'LSI3': `Bearer YOUR_UNIQUE_LSI3_KEY_NO`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
