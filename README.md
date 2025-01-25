@@ -12,7 +12,7 @@ Beyond just validating the data, the LeadEngine API Connector adds significant v
 ## How to Use
 To utilize our API Connector, your integration will require a unique API key provided by the partner team at Obsidione. This key is unique and essential for authenticating requests and ensuring secure communication between your webform and our backend systems. Please contact us to obtain your unique API key. LSI key numbers are strong encryption codes which is obtained from the partner team, which is applicable for certain industries.
 
-Please remember to validate the CurrentTimestamp to match the current Norwegian time (DDMMYY MMSSII UTC). If a timestamp is incorrect to server time, the request will fail with error 500.
+Please remember to validate the CurrentTimestamp to match the current Norwegian time (DDMMYY MMSSII UTC). If a timestamp is incorrect to server time (with a slight secret security delay), the request will fail with error 500.
 
 We recommend sending the information via Axios to ensure the best compatibility. Please see below for a super-simple example of how to use Axios with the POST method.
 
@@ -70,7 +70,9 @@ const handleFormSubmission = (formName, formEmail, formPhone, formCompany, formC
 
 ```
 
-Your request will return a JS array with status code 200 for successful transmissions and 500 for failed transmissions. Failed transmissions will also contain a error message under the "message" section.
+Your request will return a JS array with status code 200 for successful transmissions, and 500 for failed transmissions. Failed transmissions will also contain a error message under the "message" section as well as the specific reason. To prevent submissions from failing, we do recommend to validate all information frontend, making sure the lead relevancy score will stay high.
+
+All submitted leads will be validated backend and is also scored for fraud, giving it an internal score of 0-100. All leads with a score of 20 or less will automatically be discarded and sent to error 500 with error message Invalid dataset.
 
 ```
 {status: 200, message: "Successful data transmission", uqTransIdent: "dc01fd0ae686d40b231063a529ab955a"}
@@ -81,6 +83,10 @@ Please contact us to have a full overview of all possible strings to be passed. 
 
 ## Validation of information
 To ensure that the ObsAPI will receive valid customer information, and to reduce the risk of receiving error messages during the data transmission, we require that you validate the customer information yourself before forwarding the request to the API. Data will be validated in the API as well, and as a result of this, your request might fail with status code 500.
+
+All information spinning and distrubution takes place after the lead is submitted to Obsidione, based on API criterias and partner agreements. For security purposes, it is not possible to select priority distribution to a specific partner.
+
+## Validation examples
 
 For validation of information from Norway, you can use the npm package norsk-validator which supports organisasjonsnummer, KID-nummer, bank account number and Norwegian social security numbers. Remember to never share or pass on sensitive information through our services.
 
@@ -120,7 +126,7 @@ async function checkZipcode(zipCodeNo) {
       console.log(`City: ${city}`);
       console.log(`Country: ${country}`);
     } else {
-      console.log(`Valid: 0`);
+      console.log(`Zip code provided does not exist`);
     }
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -136,13 +142,28 @@ await checkZipcode(zipCode);
 Sweden (via npm swedish-portal-code-validator)
 ```
 import { isValid } from 'swedish-postal-code-validator';
+
+const zipCode = response.data.zipCode;
  
 isValid('41663') // => true
 isValid('32663') // => false
 ```
 
+Denmark (via @kevinfrom/danish-zipcodes-api)
+
+```
+import { createZipCodesApi } from '@kevinfrom/danish-zipcodes-api'
+
+const api = createZipCodesApi()
+
+api.searchByZip(6950).then(data => console.log(data))
+
+// Search by name
+api.searchByName('Ringkøbing').then(data => console.log(data))
+```
+
 ## Contact us
-This is just example codes and has to be modified into your existing systems. If you have any questions for the implementation or submission processes for external leads, please contact us through partners@obsidione.com.
+This is just example codes and has to be modified into your existing systems. If you have any questions for the implementation or submission processes for external leads, please contact us through support@obsidione.com.
 
 &copy; 2025 Obsidione Norway AS<br />
 Leading the way there<br/><br />
